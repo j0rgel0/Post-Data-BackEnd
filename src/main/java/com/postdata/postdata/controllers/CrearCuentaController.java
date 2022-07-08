@@ -23,7 +23,7 @@ private final CrearCuentaServices cuentaServices;
 	}//constructor
 
 	@PostMapping
-	public CrearCuenta crearCuenta(@RequestBody CrearCuenta crearcuenta){
+	public CrearCuenta addCrearCuenta(@RequestBody CrearCuenta crearcuenta){
 		return cuentaServices.addCrearCuenta(crearcuenta);
 		
 	}

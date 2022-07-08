@@ -9,7 +9,7 @@ public class CrearCuenta {
 	private String contrasena;
 	private static int total = 0;
 	
-	 CrearCuenta(int idRol, String nombre, String email, String contrasena) {
+	public CrearCuenta(int idRol, String nombre, String email, String contrasena) {
 		super();
 		
 		this.idRol = idRol;

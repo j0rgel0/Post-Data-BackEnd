@@ -26,5 +26,17 @@ public class CrearCuentaServices {
 		return crearcuenta;
 	}
 	
+	public boolean login (String correo, String contrasena) {
+		boolean autorizacion = false;
+		for (CrearCuenta crearcuenta: lista) {
+			if (crearcuenta.getEmail().equals(correo) &&
+				crearcuenta.getContrasena().equals(contrasena)) {
+				autorizacion = true;
+				break;
+			}//if
+		}//foreach
+		return autorizacion;
+	}//login
+	
 	
 }
