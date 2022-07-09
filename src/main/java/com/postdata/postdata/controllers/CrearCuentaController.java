@@ -15,17 +15,18 @@ import com.postdata.postdata.services.ProductoServices;
 @RestController
 @RequestMapping (path="/api/usuario")
 public class CrearCuentaController {
-private final CrearCuentaServices cuentaServices;
-
+	private final CrearCuentaServices cuentaServices;
+	
+	
 	@Autowired //Inicializar una variable que no esta Inicializado
 	public CrearCuentaController(CrearCuentaServices cuentaServices) {
 	this.cuentaServices = cuentaServices;
 	}//constructor
 
+	
 	@PostMapping
 	public CrearCuenta addCrearCuenta(@RequestBody CrearCuenta crearcuenta){
 		return cuentaServices.addCrearCuenta(crearcuenta);
-		
 	}
 
 }

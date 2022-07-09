@@ -1,53 +1,58 @@
 package com.postdata.postdata;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="usuarios")
 public class CrearCuenta {
-	
-	private int idRol;
-	private int idUsuarios;
+	@Id
+	@GeneratedValue(strategy = GenerationType. IDENTITY)
+	@Column(name ="idusuarios", unique =true, nullable= false)
+	private Long idUsuarios;
+	@Column(name="roles_idroles")
+	private Long idRol;
 	private String nombre;
 	private String email;
 	private String contrasena;
-	private static int total = 0;
 	
-	public CrearCuenta(int idRol, String nombre, String email, String contrasena) {
+	public CrearCuenta(Long idRol, String nombre, String email, String contrasena) {
 		super();
 		
 		this.idRol = idRol;
 		this.nombre = nombre;
 		this.email = email;
 		this.contrasena = contrasena;
-		total ++;
-        this.idUsuarios=total;
 	}
 	
 	public CrearCuenta() {
-		total ++;
-        this.idUsuarios=total;	
 	}
 	public CrearCuenta(String nombre, String email, String contrasena) {
 		super();
 		
-		this.idRol = 1;
+		this.idRol = (long) 1;
 		this.nombre = nombre;
 		this.email = email;
 		this.contrasena = contrasena;
-		total ++;
-        this.idUsuarios=total;
 	}
 	
-	public int getIdRol() {
+	public Long getIdRol() {
 		return idRol;
 	}
 
-	public void setIdRol(int idRol) {
+	public void setIdRol(Long idRol) {
 		this.idRol = idRol;
 	}
 
-	public int getIdUsuarios() {
+	public Long getIdUsuarios() {
 		return idUsuarios;
 	}
 
-	public void setIdUsuarios(int idUsuarios) {
+	public void setIdUsuarios(Long idUsuarios) {
 		this.idUsuarios = idUsuarios;
 	}
 

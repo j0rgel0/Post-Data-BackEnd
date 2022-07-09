@@ -1,40 +1,46 @@
 package com.postdata.postdata.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.postdata.postdata.CrearCuenta;
-import com.postdata.postdata.Producto;
 
 @Service
 public class CrearCuentaServices {
 	//definir productos //lista constante final
-	public final ArrayList<CrearCuenta> lista = new ArrayList<CrearCuenta>();
-	CrearCuentaServices(){
-		lista.add(new CrearCuenta(0, "Cristobal", "cristobal@gmail.com", "Unapass1"));
-		lista.add(new CrearCuenta(0, "Abraham", "abraham@gmail.com","Unapass2"));
-		lista.add(new CrearCuenta(0, "Eric","eric@gmail.com","Unapass3"));
-		lista.add(new CrearCuenta(0, "Jorge", "jorge@gmail.com", "Unapass4"));
-		lista.add(new CrearCuenta(0, "Alma","alma@gmail.com","Unapass5"));
-		lista.add(new CrearCuenta(0, "Christofer","christofer@gmail","Unapass6"));
+	private final CrearCuentaRepository crearCuentaRepository;
 	
+	@Autowired
+	public CrearCuentaServices(CrearCuentaRepository crearCuentaRepository) {
+		this.crearCuentaRepository = crearCuentaRepository;
 	}
 	
 	public CrearCuenta addCrearCuenta(CrearCuenta crearcuenta) {
-		lista.add(crearcuenta);
-		return crearcuenta;
+		CrearCuenta tmpProd = null;
+		Optional<CrearCuenta> prodByName = crearCuentaRepository.findByEmail(crearcuenta.getEmail());
+		
+		if (prodByName.isPresent()) {
+			throw new IllegalArgumentException("El correo" +
+					crearcuenta.getEmail() + "] ya está registrado");
+		}else {
+			crearCuentaRepository.save(crearcuenta);
+			tmpProd=crearcuenta;
+		}
+		return tmpProd;
 	}
 	
 	public boolean login (String correo, String contrasena) {
 		boolean autorizacion = false;
-		for (CrearCuenta crearcuenta: lista) {
-			if (crearcuenta.getEmail().equals(correo) &&
-				crearcuenta.getContrasena().equals(contrasena)) {
-				autorizacion = true;
-				break;
-			}//if
-		}//foreach
+		Optional<CrearCuenta>prodByLogin = crearCuentaRepository.findByEmailAndContrasena(correo,contrasena);
+		if(prodByLogin.isPresent()) {
+			autorizacion = true;
+			System.out.println("Inicio de sesión exitoso");
+		}else {
+			System.out.println("Inicio de sesión fallido");
+		}
 		return autorizacion;
 	}//login
 	

@@ -18,9 +18,8 @@ import com.postdata.postdata.Producto;
 import com.postdata.postdata.services.ProductoServices;
 @RestController
 @RequestMapping (path="/api/products")
-@CrossOrigin(origins = "*")
 public class ProductoController {
-private final ProductoServices productoServices;
+	private final ProductoServices productoServices;
 	
 	@Autowired
 	public ProductoController(ProductoServices productoServices) {
@@ -34,12 +33,12 @@ private final ProductoServices productoServices;
 	}//getAllProducts
 	
 	@GetMapping (path="{prodId}")
-	public Producto getProduct(@PathVariable("prodId")int id) {
+	public Producto getProduct(@PathVariable("prodId")Long id) {
 		return productoServices.getProducto(id);
 	}
 	
 	@DeleteMapping (path="{prodId}")
-	public Producto deleteProduct(@PathVariable("prodId")int id) {
+	public Producto deleteProduct(@PathVariable("prodId")Long id) {
 		return productoServices.deleteProducto(id);
 	}
 	@PostMapping
@@ -47,7 +46,7 @@ private final ProductoServices productoServices;
 		return productoServices.addProducto(producto);
 	}
 	@PutMapping (path="{prodId}")
-	public Producto updateProduct (@PathVariable("prodId") int id,
+	public Producto updateProduct (@PathVariable("prodId") Long id,
 			@RequestParam (required = false)String nombre,
 			@RequestParam (required = false)String autor,
 			@RequestParam (required = false)String editorial,

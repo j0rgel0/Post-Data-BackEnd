@@ -1,20 +1,35 @@
 package com.postdata.postdata;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="libros")
 public class Producto {
+	@Id
+	@GeneratedValue(strategy = GenerationType. IDENTITY)
+	@Column(name ="idlibros", unique =true, nullable= false)
+	private Long id;
+	@Column(name="titulo")
 	private String nombre;
 	private String autor; 
 	private String editorial;
 	private String ISBN;
+	@Column(name="urlimagen")
 	private	String URL_imagen;
 	private String descripcion;
 	private double precio;
-	private int id;
-	private static int total = 0;
+
 	
-	public Producto(String nombre, String autor,
+	public Producto(Long id,String nombre, String autor,
 			String editorial, String iSBN, String uRL_imagen, String descripcion,
 			double precio) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.autor = autor;
 		this.editorial = editorial;
@@ -22,17 +37,13 @@ public class Producto {
 		URL_imagen = uRL_imagen;
 		this.descripcion = descripcion;
 		this.precio = precio;
-		total++;
-		this.id = total;
 	}//Hey bob!
 	
 	public Producto() {
-		total++;
-		this.id = total;
 	}//Hey empty bob!
 	
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -78,12 +89,7 @@ public class Producto {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public static int getTotal() {
-		return total;
-	}
-	public static void setTotal(int total) {
-		Producto.total = total;
-	}
+	
 	@Override
 	public String toString() {
 		return "Producto [nombre=" + nombre + ", autor=" + autor + ", editorial=" + editorial + ", ISBN=" + ISBN
