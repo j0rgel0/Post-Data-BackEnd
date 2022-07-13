@@ -18,7 +18,7 @@ public class PostdataApplication {
 	public FilterRegistrationBean<JwtFilter> jwtFilter() {
 		FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<JwtFilter>();
 		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/api/productos/*");
+		registrationBean.addUrlPatterns("/api/products/*");
 		registrationBean.addUrlPatterns("/api/user/*");
 		return registrationBean;
 	}
