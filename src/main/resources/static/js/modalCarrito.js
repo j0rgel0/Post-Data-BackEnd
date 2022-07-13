@@ -1,8 +1,8 @@
-contador = parseInt(localStorage.getItem("contadorProductos"));
-document.getElementById("contadorProductosModal").innerHTML = contador;
+	contador = parseInt(localStorage.getItem("contadorProductos"));
+	document.getElementById("contadorProductosModal").innerHTML = contador;
 
-// Botón que añade producto
-btnAgregar.addEventListener("click", (event) => {
+	// Botón que añade producto
+	btnAgregar.addEventListener("click", (event) => {
     event.preventDefault();
     
     // Se suma en 1

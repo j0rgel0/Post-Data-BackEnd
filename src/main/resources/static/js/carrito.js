@@ -34,6 +34,7 @@ botonEnviar.addEventListener("click", (event)=> {
     }
     
 })
+
 botonLimpiar.addEventListener("click", (event)=> {
     event.preventDefault();
     if (localStorage.getItem("elementosCarrito") != null){
@@ -60,6 +61,7 @@ botonLimpiar.addEventListener("click", (event)=> {
     }
     
 })
+
 
 // Arreglo global para almacenar la lista de compras.
 let cuerpoTabla = tabla.getElementsByTagName("tbody");
@@ -125,6 +127,11 @@ window.addEventListener("load", function () {
               <h5 id="nombreCarrito" class="ml-0 mb-0 modalNombre">${element.nombre}</h5>
               <small class="text-muted">${element.autor}</small><br>
               <span class="text-dark" class="modalISBN"><strong>ISBN:</strong> ${element.isbn}</span><br>
+                  
+       				<button id="decrement" onclick="stepper(this)"> - </button>
+        			<input class="text-center" type="number" min="0" max="100" step="1" value="${element.cantidad}" id="my-input" readonly>
+        			<button id="increment" onclick="stepper(this)"> + </button>
+    				
               <span id="movilPrecio" class="text-dark"><strong>Precio:</strong>$${element.precio} MXN</span>
               <span id="movilCantidad" class="text-dark"><strong>Cantidad:</strong> ${element.cantidad}</span>
             </div>
@@ -133,12 +140,10 @@ window.addEventListener("load", function () {
             <td id="tdCantidad" class="text-center text-dark">${
               element.cantidad
           }</td>
-            <td id="tdPrecio" class="text-dark text-center">${
+            <td id="tdPrecio" class="text-dark text-center separadorMiles">${
                 "$ " + element.precio + " MXN"
             }</td>
-            </tr> 
-            
-
+            </tr>
             `;
         }
         );
@@ -147,6 +152,21 @@ window.addEventListener("load", function () {
             total+=parseFloat(element.cantidad)*parseFloat(element.precio);
         }
         );
-        document.getElementById("precioTotal").innerHTML ="$"+ total +" MXN";
+        document.getElementById("precioTotal").innerHTML ="$"+ total.toLocaleString('es-MX') +" MXN";
     }
 });
+
+				const myInput = document.getElementById("my-input");
+				function stepper(btn){
+				    let id = btn.getAttribute("id");
+				    let min = myInput.getAttribute("min");
+				    let max = myInput.getAttribute("max");
+				    let step = myInput.getAttribute("step");
+				    let val = myInput.getAttribute("value");
+				    let calcStep = (id == "increment") ? (step*1) : (step * -1);
+				    let newValue = parseInt(val) + calcStep;
+				
+				    if(newValue >= min && newValue <= max){
+				        myInput.setAttribute("value", newValue);
+				    }
+				}

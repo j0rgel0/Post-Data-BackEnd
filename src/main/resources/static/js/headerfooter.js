@@ -102,9 +102,10 @@ let datosCarrito = [];
 if (localStorage.getItem("contadorProductos")<=0) {
   contador=0;
   localStorage.setItem("contadorProductos", contador)
+  document.getElementById("contadorProductosNavBar").innerHTML = contador;
+  document.getElementById("contadorProductosModal").innerHTML = contador;
 } // if  contadorProductos
 
 contador = parseInt(localStorage.getItem("contadorProductos"));
 document.getElementById("contadorProductosNavBar").innerHTML = contador;
-document.getElementById("contadorProductosModal").innerHTML = contador;
 //
