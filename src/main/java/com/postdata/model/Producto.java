@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="libros")
+
 public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -40,7 +41,7 @@ public class Producto {
 
 	public Producto() {
 	}//Hey empty bob!
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -112,3 +113,6 @@ public class Producto {
 	}
 
 }//class Producto
+
+
+

@@ -11,5 +11,4 @@ public interface ProductoRepository extends JpaRepository<Producto, Long>{
 	//	Producto es de Producto.java
 	@Query("SELECT p FROM Producto p WHERE p.nombre=?1")
 	Optional<Producto> findByNombre(String nombre);
-
 }

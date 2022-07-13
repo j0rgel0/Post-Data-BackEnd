@@ -1,12 +1,9 @@
 package com.postdata.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.postdata.model.Producto;
 
 @Service
@@ -26,6 +23,7 @@ public class ProductoServices {
 		return productoRepository.findById(id).orElseThrow(
 				()->new IllegalArgumentException("El producto con el id"+ id + " no existe."));
 	}	
+	
 	public Producto deleteProducto(Long id) {
 		Producto tmpProd = null;
 		if (productoRepository.existsById(id)) {
@@ -34,6 +32,7 @@ public class ProductoServices {
 		}
 		return tmpProd;
 	}
+	
 	public Producto addProducto(Producto producto) {
 		Producto tmpProd = null;
 		Optional<Producto> prodByName = productoRepository.findByNombre(producto.getNombre());
