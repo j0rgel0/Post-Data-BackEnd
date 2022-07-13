@@ -15,36 +15,33 @@ import io.jsonwebtoken.SignatureException;
 
 public class JwtFilter extends GenericFilterBean {
 	public static String secret = "CH13Mix-promodescuentos-Guapos-y-Modestos-20220711";
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		String authHeader =  httpServletRequest.getHeader("authorization");
-		if( ( "POST".equals(httpServletRequest.getMethod())) ||
-				( ( "GET".equals(httpServletRequest.getMethod())) &&
-						(! httpServletRequest.getRequestURI().contains("/api/productos/"))) ||
-				( "PUT".equals(httpServletRequest.getMethod())) ||
-				( "DELETE".equals(httpServletRequest.getMethod())) 
-				) {
+		String authHeader = httpServletRequest.getHeader("authorization");
+		if (("POST".equals(httpServletRequest.getMethod()))
+				|| (("GET".equals(httpServletRequest.getMethod()))
+					&& !httpServletRequest.getRequestURI().endsWith("/api/products/"))
+				|| ("PUT".equals(httpServletRequest.getMethod()))
+				|| ("DELETE".equals(httpServletRequest.getMethod()))) {
 			if (authHeader == null || !authHeader.startsWith("Bearer: ")) {
 				throw new ServletException("1. Invalid Token");
 			}
 			String token = authHeader.substring(7);
 			try {
-			Claims claims = Jwts.parser().setSigningKey(secret)
-					.parseClaimsJws(token).getBody();
-					claims.forEach((key, value)->{
-						System.out.println("key: " + key +"value:" + value);
-				 
-			});// ayuda a administrar al usuario, rol o roles
-			}catch (SignatureException | MalformedJwtException | ExpiredJwtException  e) {
-				throw new ServletException("2. Invalid Token.");
-			}//catch
+				Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+				claims.forEach((key, value) -> {
+					System.out.println("key: " + key + "value:" + value);
 
-			}// conjunto de valores para saber si es valido o no
+				});// ayuda a administrar al usuario, rol o roles
+			} catch (SignatureException | MalformedJwtException | ExpiredJwtException e) {
+				throw new ServletException("2. Invalid Token.");
+			} // catch
+
+		} // conjunto de valores para saber si es valido o no
 		chain.doFilter(request, response);
 	}
-	
 
-}//class JwtFilter
+}// class JwtFilter
