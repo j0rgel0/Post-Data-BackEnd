@@ -1,4 +1,3 @@
-let URLMain = "http://127.0.0.1:8087/api/products/";
 let rowProds = document.getElementById("list-items");
 
 function doProduct(item){
@@ -21,7 +20,7 @@ rowProds.innerHTML+=`<div id="contenedorProducto" class="d-flex flex-column card
         </div>`;
 }//doProduct
 
-fetch(URLMain, {
+fetch('http://127.0.0.1:8087/api/products/', {
     method: "GET"
 // Funcion anonima o de flecha.
 // En este caso, función flecha.
@@ -29,6 +28,8 @@ fetch(URLMain, {
     response.json().then((data) => {
         data.forEach(element => {
             doProduct(element);
+                console.log(data);
+                console.log(element);
         });
     // Error en el servidor, DNS están mal, no tienes conexión
     }).catch((err)=> {

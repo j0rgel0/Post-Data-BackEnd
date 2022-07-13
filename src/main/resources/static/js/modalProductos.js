@@ -1,6 +1,9 @@
- function cargarModal(isbn){
-     datos = JSON.parse(localStorage.getItem("productos"));
-     datos.forEach(element => {
+  function cargarModal(isbn){
+  fetch('http://127.0.0.1:8087/api/products/')  
+  .then(res => res.json())  
+  .then((out) => {  
+    console.log(out);  
+    out.forEach(element => {
          if(element.isbn == isbn){
              document.getElementsByClassName("modalImagen")[0].src = element.url_imagen;
              document.getElementsByClassName("modalNombre")[0].innerHTML = element.nombre;
@@ -11,6 +14,10 @@
              document.getElementsByClassName("modalPrecio")[0].innerHTML = "$ "+element.precio+" MXN";
              }
      });
+  })  
+  .catch(err => {  
+    throw err  
+  });
  }
  
  function cargarCarrito(isbn){
