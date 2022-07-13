@@ -29,8 +29,7 @@ botonEnviar.addEventListener("click", (event)=> {
                 "email" : "${txtEmail.value}",
                 "contrasenia" : "${txtContrasena.value}"}`;
         
-                datos.push(JSON.parse(elemento))
-                
+                datos.push(JSON.parse(elemento));
                 swal("¡Adelante!", "Cuenta creada exitosamente", "success"); //SweetAlert
                 
                 // Crear un nuevo JSON

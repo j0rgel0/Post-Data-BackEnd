@@ -57,6 +57,7 @@ public class UsuarioService {
 				usuarioRepository.save(tmpUsuario);
 			} else {
 				System.out.println("Error al comparar las contrase�as...");
+				tmpUsuario= null;
 			}
 				//if equals password
 			}

@@ -27,17 +27,6 @@ botonEnviar.addEventListener("click", (event)=> {
         "descripcion" : "${txtDescripcion.value}",
         "isbn" : "${txtISBN.value}",
         "precio" : "${txtPrecio.value}"}`;
-        
-        /* //Se comenta este codigo como futura referencia, 
-            era para guardar en el local storage 
-        //JSON a JS
-        //datos = JSON.parse(localStorage.getItem("productos"));
-        //datos.push(JSON.parse(elemento));
-    
-        // Crear de nuevo JSON
-        //localStorage.setItem("productos", JSON.stringify(datos));
-        //swal("Producto añadido correctamente", "", "success"); //SweetAlert
-        */
 
         createProduct(elemento);
         txtNombre.value = "";
@@ -53,7 +42,7 @@ botonEnviar.addEventListener("click", (event)=> {
 
 const createProduct = (producto) => {
 
-   fetch('http://localhost:8081/api/products', 
+   fetch('http://127.0.0.1:8087/api/products/', 
    {
       body: producto,
       method: 'POST',

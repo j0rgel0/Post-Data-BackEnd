@@ -2,7 +2,7 @@
      datos = JSON.parse(localStorage.getItem("productos"));
      datos.forEach(element => {
          if(element.isbn == isbn){
-             document.getElementsByClassName("modalImagen")[0].src = element.img;
+             document.getElementsByClassName("modalImagen")[0].src = element.url_imagen;
              document.getElementsByClassName("modalNombre")[0].innerHTML = element.nombre;
              document.getElementsByClassName("modalAutor")[0].innerHTML = "de " + element.autor;
              document.getElementsByClassName("modalISBN")[0].innerHTML = "<strong>ISBN:</strong> " + element.isbn;
@@ -22,7 +22,7 @@
         contador2++;
           if(element.isbn == isbn){
            let elemento = `{
-            "img" : "${element.img}",
+            "img" : "${element.url_imagen}",
             "nombre" : "${element.nombre}",
             "cantidad" : 1, 
             "autor" : "${element.autor}",

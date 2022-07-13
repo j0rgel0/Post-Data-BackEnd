@@ -1,7 +1,9 @@
-function addItem(item){
-    const itemHTML = 
-        `<div id="contenedorProducto" class="d-flex flex-column card-deck col-md-5 col-lg-3 col-xl-2" data-toggle="modal" data-target="#isbn" onclick="cargarModal(${item.isbn})">
-         <img id="imagenProducto" class="card-img-top mt-2" src="${item.img}"/>
+let URLMain = "http://127.0.0.1:8087/api/products/";
+let rowProds = document.getElementById("list-items");
+
+function doProduct(item){
+rowProds.innerHTML+=`<div id="contenedorProducto" class="d-flex flex-column card-deck col-md-5 col-lg-3 col-xl-2" data-toggle="modal" data-target="#isbn" onclick="cargarModal(${item.isbn})">
+         <img id="imagenProducto" class="card-img-top mt-2" src=${item.url_imagen}>
  
              <div class="card-body">
                  <div class="text-center">
@@ -16,27 +18,23 @@ function addItem(item){
                  </div>
                  <button type="button" class="btn btn-outline-dark mt-auto">Ver</button>
              </div>
-        </div>
-        `;
-    const itemsContainer = document.getElementById("list-items");
-    itemsContainer.innerHTML += itemHTML;
- }
+        </div>`;
+}//doProduct
 
-if (localStorage.length == 0) {
-    window.localStorage.setItem("productos", JSON.stringify(productos));
-    window.addEventListener("load", function () {
-        datos = JSON.parse(localStorage.getItem("productos"));
-        datos.forEach(element => {
-            addItem(element);
+fetch(URLMain, {
+    method: "GET"
+// Funcion anonima o de flecha.
+// En este caso, función flecha.
+}).then( (response) => {
+    response.json().then((data) => {
+        data.forEach(element => {
+            doProduct(element);
         });
- });
- }
- 
- if (localStorage.length > 0) {
-    window.addEventListener("load", function () {
-     datos = JSON.parse(localStorage.getItem("productos"));
-        datos.forEach(element => {
-            addItem(element); 
-        });
- });
- }
+    // Error en el servidor, DNS están mal, no tienes conexión
+    }).catch((err)=> {
+        console.log("catch request "+ err);
+    });
+// Encontró el servidor, pero no existe el dato.
+}).catch((err)=> {
+    console.log("catch request "+ err);
+});

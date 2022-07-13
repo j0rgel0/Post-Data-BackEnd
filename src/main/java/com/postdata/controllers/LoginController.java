@@ -9,6 +9,7 @@ import com.postdata.model.Token;
 import com.postdata.model.Usuario;
 import com.postdata.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping(path="/api/login/")
+
 public class LoginController {
 	private final UsuarioService usuarioService;
 	
