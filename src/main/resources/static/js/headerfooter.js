@@ -106,5 +106,5 @@ if (localStorage.getItem("contadorProductos")<=0) {
 
 contador = parseInt(localStorage.getItem("contadorProductos"));
 document.getElementById("contadorProductosNavBar").innerHTML = contador;
-// document.getElementById("contadorProductosModal").innerHTML = contador;
+document.getElementById("contadorProductosModal").innerHTML = contador;
 //
