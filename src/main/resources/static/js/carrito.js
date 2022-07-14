@@ -11,6 +11,12 @@ let botonEnviar = document.querySelector("#botonEnviar");
 
 botonEnviar.addEventListener("click", (event)=> {
     event.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      swal("Favor de iniciar sesión", "", "danger");
+      return;
+    } 
+
     if (localStorage.getItem("elementosCarrito") != null){
     swal({
         title: "¿Proceder con la compra?",
@@ -23,8 +29,10 @@ botonEnviar.addEventListener("click", (event)=> {
           swal("¡Compra realizada!", {
             icon: "success",
           }).then(function(){ 
+            localStorage.removeItem("carritoAgrupado");
+            localStorage.removeItem("contadorProductos");
+            localStorage.removeItem("elementosCarrito");
             location.reload();
-            localStorage.clear();
             })
         } else {
         }
@@ -34,7 +42,6 @@ botonEnviar.addEventListener("click", (event)=> {
     }
     
 })
-
 botonLimpiar.addEventListener("click", (event)=> {
     event.preventDefault();
     if (localStorage.getItem("elementosCarrito") != null){
@@ -49,8 +56,10 @@ botonLimpiar.addEventListener("click", (event)=> {
           swal("¡Carrito borrado!", {
             icon: "success",
           }).then(function(){ 
+            localStorage.removeItem("carritoAgrupado");
+            localStorage.removeItem("contadorProductos");
+            localStorage.removeItem("elementosCarrito");
             location.reload();
-            localStorage.clear();
             })
         } else {
           
@@ -62,11 +71,11 @@ botonLimpiar.addEventListener("click", (event)=> {
     
 })
 
-
 // Arreglo global para almacenar la lista de compras.
 let cuerpoTabla = tabla.getElementsByTagName("tbody");
 
 window.addEventListener("load", function () {
+
     document.getElementById("contadorProductos").innerHTML=contador;
     document.getElementById("productosTotal").innerHTML=contador;
 
@@ -84,7 +93,7 @@ window.addEventListener("load", function () {
     const AgrupayAnade = nuevoArreglo => {
       const nuevoJSON = [];
       nuevoArreglo.forEach(elemento => {
-         if (!this[elemento.isbn]) {
+        if (!this[elemento.isbn]) {
           contador2++;
             this[elemento.isbn] = {
                id: contador2,
@@ -107,8 +116,10 @@ window.addEventListener("load", function () {
   
     if (localStorage.getItem("carritoAgrupado") != null) {
         total = 0;
+        indice = 0;
         datos = JSON.parse(localStorage.getItem("carritoAgrupado"));
-        datos.forEach(element => {
+        datos.forEach((element) => {
+            
             cuerpoTabla[0].innerHTML += `<tr>
             <div >
             <th class="text-dark" scope="row" style="
@@ -127,46 +138,107 @@ window.addEventListener("load", function () {
               <h5 id="nombreCarrito" class="ml-0 mb-0 modalNombre">${element.nombre}</h5>
               <small class="text-muted">${element.autor}</small><br>
               <span class="text-dark" class="modalISBN"><strong>ISBN:</strong> ${element.isbn}</span><br>
-                  
-       				<button id="decrement" onclick="stepper(this)"> - </button>
-        			<input class="text-center" type="number" min="0" max="100" step="1" value="${element.cantidad}" id="my-input" readonly>
-        			<button id="increment" onclick="stepper(this)"> + </button>
-    				
               <span id="movilPrecio" class="text-dark"><strong>Precio:</strong>$${element.precio} MXN</span>
-              <span id="movilCantidad" class="text-dark"><strong>Cantidad:</strong> ${element.cantidad}</span>
+              <span id="movilCantidad" class="text-dark"><strong>Cantidad:</strong> ${element.cantidad} </span>
+              
             </div>
           </section>
             </td>
-            <td id="tdCantidad" class="text-center text-dark">${
-              element.cantidad
-          }</td>
-            <td id="tdPrecio" class="text-dark text-center separadorMiles">${
+            <td id="tdCantidad" class="text-center text-dark">
+     
+            <input type="number" id="quantity_${indice}" name="quantity" min="1" max="5" value=${element.cantidad} onclick="modifica(${indice})">
+            <br/>
+            <br/>
+            <input type="button" class="btn btn-danger" id="elimina_${indice}" name="elimina" onclick="elimina(${indice})" value="Eliminar">
+            
+
+
+          </td>
+            <td id="tdPrecio" class="text-dark text-center">${
                 "$ " + element.precio + " MXN"
             }</td>
-            </tr>
+            </tr> 
             `;
+            indice++;
         }
         );
+
         
         datos.forEach(element => {
             total+=parseFloat(element.cantidad)*parseFloat(element.precio);
         }
         );
-        document.getElementById("precioTotal").innerHTML ="$"+ total.toLocaleString('es-MX') +" MXN";
+        document.getElementById("precioTotal").innerHTML ="$"+ total +" MXN";
     }
 });
 
-				const myInput = document.getElementById("my-input");
-				function stepper(btn){
-				    let id = btn.getAttribute("id");
-				    let min = myInput.getAttribute("min");
-				    let max = myInput.getAttribute("max");
-				    let step = myInput.getAttribute("step");
-				    let val = myInput.getAttribute("value");
-				    let calcStep = (id == "increment") ? (step*1) : (step * -1);
-				    let newValue = parseInt(val) + calcStep;
-				
-				    if(newValue >= min && newValue <= max){
-				        myInput.setAttribute("value", newValue);
-				    }
-				}
+function modifica(index) {
+  console.log(index);
+  variable = "quantity_"+index;
+  datos = JSON.parse(localStorage.getItem("carritoAgrupado"));
+  cantidadd = parseInt(document.getElementById(variable).value);
+  contador2++;
+  console.log(cantidadd);
+  
+  total =0;
+  let total2=0;
+  datos.forEach(element => {
+    if (element.id === index+1){
+      element.cantidad = cantidadd
+    }
+    total += element.cantidad;
+  })
+  datos.forEach(element => {
+     total2+=parseFloat(element.cantidad)*parseFloat(element.precio);
+  }
+  );
+  console.log(total);
+  document.getElementById("contadorProductos").innerHTML=total;
+  document.getElementById("precioTotal").innerHTML ="$"+ total2 +" MXN";
+  document.getElementById("productosTotal").innerHTML=total;
+  document.getElementById("contadorProductos").innerHTML=total;
+  document.getElementById("contadorProductosNavBar").innerHTML=total;
+  
+  localStorage.setItem("contadorProductos",JSON.stringify(total))
+  localStorage.setItem("elementosCarrito", JSON.stringify(datos));
+  location.reload();
+
+}
+
+function elimina(index){
+  swal({
+    title: "¿Eliminar producto de carrito?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((comprar) => {
+    if (comprar) {
+      swal("¡Producto eliminado!", {
+        icon: "success",
+      }).then(function(){ 
+      total =0;
+      
+       datos = JSON.parse(localStorage.getItem("carritoAgrupado"));
+      if (datos.length==1){
+        localStorage.removeItem("carritoAgrupado");
+        localStorage.removeItem("contadorProductos");
+        localStorage.removeItem("elementosCarrito");
+        location.reload();
+      }else{
+
+       nuevo = datos.filter(data => data.id != index+1);
+       conta=1;
+       nuevo.forEach(element => {
+        element.id = conta;
+        conta++;
+        total += element.cantidad;
+      })
+        localStorage.setItem("contadorProductos",JSON.stringify(total))
+        localStorage.setItem("elementosCarrito", JSON.stringify(nuevo));
+        location.reload();
+      }
+    })
+    } 
+  });
+}

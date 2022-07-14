@@ -30,8 +30,7 @@ botonEnviar.addEventListener("click", (event) => {
 
       const token = localStorage.getItem("token");
       if (!token) {
-         console.log("No hay token");
-         swal("No hay token", "", "danger");
+         swal("Favor de iniciar sesión", "", "danger");
       } else {
          createProduct(elemento, token);
       }
