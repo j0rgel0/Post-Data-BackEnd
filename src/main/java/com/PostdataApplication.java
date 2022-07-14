@@ -14,13 +14,13 @@ public class PostdataApplication {
 		SpringApplication.run(PostdataApplication.class, args);
 	}
 	
-	@Bean
-	public FilterRegistrationBean<JwtFilter> jwtFilter() {
-		FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<JwtFilter>();
-		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/api/products/*");
-		registrationBean.addUrlPatterns("/api/user/*");
-		return registrationBean;
-	}
+//	@Bean
+//	public FilterRegistrationBean<JwtFilter> jwtFilter() {
+//		FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<JwtFilter>();
+//		registrationBean.setFilter(new JwtFilter());
+//		registrationBean.addUrlPatterns("/api/products/*");
+//		registrationBean.addUrlPatterns("/api/user/*");
+//		return registrationBean;
+//	}
 
 }
