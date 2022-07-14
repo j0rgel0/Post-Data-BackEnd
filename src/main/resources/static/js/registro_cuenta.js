@@ -12,62 +12,36 @@ botonEnviar.addEventListener("click", (event)=> {
     validaciones.email=validarEmail(txtEmail.value);
     validaciones.contraseña=validarContraseña(txtContrasena.value);
     validaciones.contraseniaValidada=validarConfirmaTuContrasena(txtContrasena.value,txtContrasenaConfirma.value);
-    
-    let usuario=JSON.parse(localStorage.getItem("usuario"));
-    if(localStorage.getItem("usuario")!=null){ 
-    const listaUsuarios=usuario.filter(usuario => usuario.email == txtEmail.value);
-    console.log(listaUsuarios);
-        if (listaUsuarios[0]) {
-            document.getElementById("errorValidacion").style = 'display';
-            document.getElementById("errorValidacion").innerHTML = "Ya existe una cuenta con este correo.<br>";
-        } else{
-            document.getElementById("errorValidacion").style = 'display: none';
             if (Object.values(validaciones).every((value) => value === true) ){
-        
+
                 let elemento =  `
                 {"nombre" : "${txtNombre.value}",
-                "email" : "${txtEmail.value}",
-                "contrasenia" : "${txtContrasena.value}"}`;
-        
-                datos.push(JSON.parse(elemento));
-                swal("¡Adelante!", "Cuenta creada exitosamente", "success"); //SweetAlert
-                
-                // Crear un nuevo JSON
-                localStorage.setItem("usuario", JSON.stringify(datos));
-            
-                txtNombre.value = "";
-                txtNombre.focus();
-        
-            
-                txtEmail.value = "";
-                txtContrasena.value = "";
-                txtContrasenaConfirma.value ="";
+                "username" : "${txtEmail.value}",
+                "password" : "${txtContrasena.value}",
+                "roles": 1
+                }`;
+      createCuenta(elemento);
+      txtNombre.value = "";
+      txtNombre.focus();
+
             }
-        }
-    }else{
-        document.getElementById("errorValidacion").style = 'display: none';
-    if (Object.values(validaciones).every((value) => value === true) ){
-
-        let elemento =  `
-        {"nombre" : "${txtNombre.value}",
-        "email" : "${txtEmail.value}",
-        "contrasenia" : "${txtContrasena.value}"}`;
-
-        datos.push(JSON.parse(elemento))
-        
-        swal("¡Adelante!", "Cuenta creada exitosamente", "success"); //SweetAlert
-        
-        // Crear un nuevo JSON
-        localStorage.setItem("usuario", JSON.stringify(datos));
-    
-        txtNombre.value = "";
-        txtNombre.focus();
-
-    
-        txtEmail.value = "";
-        txtContrasena.value = "";
-        txtContrasenaConfirma.value ="";
-    }
-
-    }
 });
+
+const createCuenta = (cuenta) => {
+   fetch('http://127.0.0.1:8087/api/user/',
+      {
+         body: cuenta,
+         method: 'POST',
+         headers: { "Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => {
+         if (response.status != 200) {
+            swal("Ocurrio un error al registrar la cuenta", "", "danger");
+         } else {
+            swal("Cuenta añadida correctamente", "", "success");
+         }
+      })
+      .catch(error => {
+         swal("Ocurrio un error al registrar el usuario", "", "danger");
+      });
+}

@@ -13,7 +13,7 @@ botonEnviar.addEventListener("click", (event)=> {
     event.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
-      swal("Favor de iniciar sesión", "", "danger");
+      swal("Mensaje enviado correctamente", "Gracias por tus comentarios", "success"); //SweetAlert
       return;
     } 
 
