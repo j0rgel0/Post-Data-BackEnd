@@ -13,7 +13,7 @@ botonEnviar.addEventListener("click", (event)=> {
     event.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
-      swal("Mensaje enviado correctamente", "Gracias por tus comentarios", "success"); //SweetAlert
+      swal("No se puede comprar,inicia sesión antes de comprar", " ", "warning"); 
       return;
     } 
 

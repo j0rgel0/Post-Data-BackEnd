@@ -20,7 +20,7 @@ function header(){
                 <!-- Para generar otro enlace en el menú crea otro contenedor div. -->
                 <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="./acerca.html">Acerca de Nosotros</a>
-                  <a class="dropdown-item" href="./conocenos/">Sobre el proyecto</a>
+                  <a class="dropdown-item" href="./conocenos/index.html">Sobre el proyecto</a>
                 </div>
             </li>
     
