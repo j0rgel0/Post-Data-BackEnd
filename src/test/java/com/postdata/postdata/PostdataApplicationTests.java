@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.postdata.model.ChangePassword;
 import com.postdata.model.Producto;
 import com.postdata.model.Usuario;
 
@@ -118,10 +119,15 @@ class PostdataApplicationTests {
 	
 	@Test
 	public void pruebaPUTUser() throws Exception {
+		ChangePassword c= new ChangePassword();
+		c.setPassword("A.abc.123");
+		c.setNewPassword("jorgemod");
 		this.mockMvc.perform(put("/api/user/1")
-		.queryParam("password", "A.abc.123")
-		.queryParam("newPassword", "jorgemod")
-//		.header("Authorization", "Bearer: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYnJhaGFtQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjU3NzY5ODk4LCJleHAiOjE2NTc4MDU4OTh9.y4x8I1UZm-ACND2x7x5kK8rFY8oJaQNxnzX4ORm19N4")
+		.contentType(MediaType.APPLICATION_JSON)  //tipo de contenidoi
+		.content(asJsonString(c)) // objeto convertiod a json string
+//		.queryParam("password", "A.abc.123")
+//		.queryParam("newPassword", "jorgemod")
+		.header("Authorization", "Bearer: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZS5sb3BlenZ6QHVkbGFwLm14Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NTc4Mzk0NDksImV4cCI6MTY1Nzg3NTQ0OX0.ukAAzQJMkrbq68wxr0RIJEc3VZYAI7gS34G5dlK95EQ")
 				)
 		.andDo( print() )
 		.andExpect( status().isOk() ) /// status 200
