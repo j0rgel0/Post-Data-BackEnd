@@ -25,4 +25,4 @@ Sus desarrolladores colaborando son:
 
 [Conócenos más](https://j0rgel0.github.io/Post-Data-FrontEnd/conocenos/)
 
-[Ver página en GitHub Pages](https://j0rgel0.github.io/Post-Data-FrontEnd/)
+[Ver página en GitHub Pages (no actualizado con nuevas características) ](https://j0rgel0.github.io/Post-Data-FrontEnd/)
